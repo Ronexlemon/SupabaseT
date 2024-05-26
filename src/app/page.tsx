@@ -1,4 +1,5 @@
 import Image from "next/image";
+//John478500#&
 
 export default function Home() {
   return (
