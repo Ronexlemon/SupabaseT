@@ -19,6 +19,7 @@ export async function login(formData: Formdata) {
     password: formData.password,
   }
   console.log("the data is data",data)
+  
 
   const { error } = await supabase.auth.signInWithPassword(data)
 
