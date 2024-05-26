@@ -8,6 +8,13 @@ interface Formdata{
     email:string,
     password:string
 }
+export interface blogint{
+    phone_number:string,
+    created_at:string,
+    blog_text:string,
+    blog_title:string
+
+}
 
 export async function login(formData: Formdata) {
   const supabase = createClient()
@@ -50,4 +57,17 @@ export async function signup(formData: Formdata) {
 
   revalidatePath('/', 'layout')
   redirect('/account')
+}
+
+
+export async function fetchdata(){
+    const supabase = createClient()
+    console.log("satrting")
+    const {data,error} = await supabase.from('blogs').select("*");
+    if (error){
+        console.log("error is error",error)
+
+    }
+   
+    return data
 }

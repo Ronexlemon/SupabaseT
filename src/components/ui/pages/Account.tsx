@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Card,
@@ -26,16 +26,30 @@ import {
   
 import { blogObject } from "@/helpers/blogdata";
 import { Bloginterface } from "@/helpers/blogdata";
+import { fetchdata } from "@/app/signup/action";
+import { blogint } from "@/app/signup/action";
+
 
 const Account = () => {
     const [isOpen,setIsopen]=useState<boolean>(false)
     const [title,setTitle]=useState<string>("")
     const [phoneNumber,setPhoneNumber]=useState<string>("")
     const [content,setContent]=useState<string>("")
+    const [blog,setBlog]=useState<blogint[] | null>([])
 
     const handlePushData = async()=>{
-        
+
     }
+    useEffect(()=>{
+        const fetchBlogs = async()=>{
+            console.log("testing")
+            const res = await fetchdata()
+            console.log("res res",res)
+            setBlog(res)
+        }
+        fetchBlogs()
+
+    },[])
   return (
     <div className="h-full w-full">
       <div className="w-full flex justify-end items-center h-20">
@@ -74,17 +88,17 @@ const Account = () => {
 
         </div>
         <div className="h-full w-full grid grid-cols-2 gap-4">
-          {blogObject.map((element: Bloginterface, index: number) => (
+          {blog?.map((element: blogint, index: number) => (
             <Card key={index}>
               <CardHeader>
-                <CardTitle>{element.title}</CardTitle>
-                <CardDescription>{element.content}</CardDescription>
+                <CardTitle>{element.blog_title}</CardTitle>
+                <CardDescription>{element.blog_text}</CardDescription>
               </CardHeader>
               <CardContent>
-                <p>Contact: {element.phoneNumber}</p>
+                <p>Contact: {element.phone_number}</p>
               </CardContent>
               <CardFooter>
-                <p>Card Footer</p>
+                <p>Time Created: {element.created_at}</p>
               </CardFooter>
             </Card>
           ))}
