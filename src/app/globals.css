@@ -71,10 +71,10 @@
       @apply border-border;
     }
     body {
-      @apply bg-background text-foreground;
+      @apply bg-black text-foreground;
     }
   }
 
   main {
-    @apply max-w-7xl my-10 mx-auto;
+    @apply max-w-7xl my-10 mx-auto ;
   }
