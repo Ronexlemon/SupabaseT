@@ -21,6 +21,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+  import { Textarea } from "@/components/ui/textarea"
+
   import { Button } from "../button";
   import { Label } from "../label";
   
@@ -28,6 +30,7 @@ import { blogObject } from "@/helpers/blogdata";
 import { Bloginterface } from "@/helpers/blogdata";
 import { fetchdata } from "@/app/signup/action";
 import { blogint } from "@/app/signup/action";
+import { createBlog } from "@/app/signup/action";
 
 
 const Account = () => {
@@ -38,6 +41,15 @@ const Account = () => {
     const [blog,setBlog]=useState<blogint[] | null>([])
 
     const handlePushData = async()=>{
+        if(!title || !phoneNumber || !content){
+            console.log("value is empty")
+            return
+        }
+        const res = await createBlog({phone_number:phoneNumber,blog_text:content,blog_title:title});
+        console.log(res)
+        if(res){
+            setIsopen(false)
+        }
 
     }
     useEffect(()=>{
@@ -74,7 +86,7 @@ const Account = () => {
       </div>
       <div className="flex flex-col gap-4 ">
         <Label>Content</Label>
-        <Input onChange={(event)=>setContent(event.target.value)}  type="text-area" className="h-10" />
+        <Textarea onChange={(event)=>setContent(event.target.value)}   className="h-10" />
 
       </div>
      

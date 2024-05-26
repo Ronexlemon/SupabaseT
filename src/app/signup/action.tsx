@@ -10,7 +10,7 @@ interface Formdata{
 }
 export interface blogint{
     phone_number:string,
-    created_at:string,
+    created_at?:string,
     blog_text:string,
     blog_title:string
 
@@ -63,11 +63,23 @@ export async function signup(formData: Formdata) {
 export async function fetchdata(){
     const supabase = createClient()
     console.log("satrting")
-    const {data,error} = await supabase.from('blogs').select("*");
+    const {data,error} = await supabase.from('blogs').select("*")
+    ;
     if (error){
         console.log("error is error",error)
 
     }
    
     return data
+}
+
+
+export async function createBlog(formdata:blogint){
+    const supabase = createClient()
+    const {data,error} = await supabase.from('blogs').insert([formdata]).select();
+    if(error){
+        console.log("error is error",error)
+    }
+    return data
+
 }
